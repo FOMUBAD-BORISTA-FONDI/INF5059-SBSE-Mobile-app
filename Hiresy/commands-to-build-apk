@@ -1,0 +1,6 @@
+
+eas build:configure
+
+select "android" then enter
+
+eas build --platform android --profile production
