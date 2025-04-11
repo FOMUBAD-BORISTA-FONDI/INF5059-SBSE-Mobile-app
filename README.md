@@ -90,7 +90,7 @@ This will open the **Expo DevTools** in your browser and display a QR code in yo
 ---
 
 ## 📂 Project Structure
-
+```bash
 INF5059-SBSE-Mobile-app/
 ├──Backend
 ├──Hiresy
@@ -100,7 +100,7 @@ INF5059-SBSE-Mobile-app/
     ├── App.js
     ├── package.json
     └── ...
-
+```
 ---
 
 ## 📄 License
