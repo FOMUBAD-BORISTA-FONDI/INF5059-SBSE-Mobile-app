@@ -1,0 +1,88 @@
+
+API Routes Documentation
+========================
+
+1. POST /login
+   - Description: Authentifier un utilisateur (employer ou job_seeker)
+   - Body (JSON):
+     {
+       "username": "string",
+       "password": "string"
+     }
+   - Response:
+     {
+       "access_token": "JWT_TOKEN"
+     }
+
+2. POST /register/employer
+   - Description: Inscription d'un employeur
+   - Body (JSON):
+     {
+       "username": "string",
+       "password": "string"
+     }
+
+3. POST /register/job_seeker
+   - Description: Inscription d'un chercheur d'emploi
+   - Body (JSON):
+     {
+       "username": "string",
+       "password": "string"
+     }
+
+4. GET /user/<user_id>
+   - Description: Obtenir les informations d’un utilisateur
+   - Header: Authorization: Bearer <JWT>
+   - Response:
+     {
+       "id": 1,
+       "username": "string",
+       "type": "employer" | "job_seeker"
+     }
+
+5. POST /job_offers
+   - Description: Créer une offre d’emploi (employer uniquement)
+   - Header: Authorization: Bearer <JWT>
+   - Body (JSON):
+     {
+       "title": "string",
+       "description": "string",
+       "criteria": {
+         "critère_1": 0.2,
+         "critère_2": 0.1,
+         ...
+         "critère_7": 0.2
+       }
+     }
+
+6. GET /job_offers
+   - Description: Lister toutes les offres d’emploi
+
+7. GET /job_offers/<job_offer_id>
+   - Description: Obtenir une offre d’emploi spécifique
+
+8. DELETE /job_offers/<job_offer_id>
+   - Description: Supprimer une offre (employer uniquement)
+   - Header: Authorization: Bearer <JWT>
+
+9. POST /apply
+   - Description: Postuler à une offre d’emploi (job seeker)
+   - Header: Authorization: Bearer <JWT>
+   - Form-Data:
+     - job_offer_id: int
+     - cv: fichier (.pdf, .doc, .docx)
+
+10. GET /applications
+    - Description: Voir toutes les candidatures du job seeker connecté
+    - Header: Authorization: Bearer <JWT>
+    - Response:
+      [
+        {
+          "id": 1,
+          "job_offer_id": 2,
+          "cv_score": 0.89,
+          "ga_result": "result_data",
+          "ahp_result": "result_data"
+        },
+        ...
+      ]

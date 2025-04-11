@@ -1,0 +1,61 @@
+
+Voici la liste des routes pour interagir avec votre API frontend :
+
+1. Enregistrement d'un employeur :
+   - Route : /register/employer
+   - Méthode : POST
+   - Description : Permet à un employeur de s'enregistrer.
+   - Données requises :
+     {
+       "username": "nom_utilisateur",
+       "password": "mot_de_passe"
+     }
+
+2. Enregistrement d'un chercheur d'emploi :
+   - Route : /register/job_seeker
+   - Méthode : POST
+   - Description : Permet à un chercheur d'emploi de s'enregistrer.
+   - Données requises :
+     {
+       "username": "nom_utilisateur",
+       "password": "mot_de_passe"
+     }
+
+3. Connexion :
+   - Route : /login
+   - Méthode : POST
+   - Description : Permet à un utilisateur (employeur ou chercheur d'emploi) de se connecter et d'obtenir un jeton d'accès.
+   - Données requises :
+     {
+       "username": "nom_utilisateur",
+       "password": "mot_de_passe"
+     }
+
+4. Création d'une offre d'emploi :
+   - Route : /job_offers
+   - Méthode : POST
+   - Description : Permet à un employeur de créer une nouvelle offre d'emploi.
+   - Données requises :
+     {
+       "title": "titre_de_l'offre",
+       "description": "description_de_l'offre",
+       "criteria": "critères_de_l'offre"
+     }
+   - Authentification : Requiert un jeton d'accès valide.
+
+5. Candidature à une offre d'emploi :
+   - Route : /apply
+   - Méthode : POST
+   - Description : Permet à un chercheur d'emploi de postuler à une offre d'emploi.
+   - Données requises :
+     {
+       "job_offer_id": id_de_l'offre
+     }
+   - Authentification : Requiert un jeton d'accès valide.
+
+6. Analyse des candidatures :
+   - Route : /analyze/<int:job_offer_id>
+   - Méthode : POST
+   - Description : Permet à un employeur d'analyser les candidatures pour une offre d'emploi spécifique.
+   - Authentification : Requiert un jeton d'accès valide.
+   - Remarque : Cette route nécessite l'implémentation des fonctions get_cv_content, extract_cv_scores, run_ga, et run_ahp pour fonctionner correctement.

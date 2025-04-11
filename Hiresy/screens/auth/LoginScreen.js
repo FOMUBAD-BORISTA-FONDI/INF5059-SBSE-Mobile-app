@@ -1,42 +1,282 @@
+// // LoginScreen.js
+// import React, { useState } from "react";
+// import {
+//   View,
+//   Text,
+//   TextInput,
+//   TouchableOpacity,
+//   StyleSheet,
+//   SafeAreaView,
+//   StatusBar,
+//   Alert,
+//   ActivityIndicator,
+// } from "react-native";
+// // import FontAwesome from "react-native-vector-icons/FontAwesome";
+// import Ionicons from "react-native-vector-icons/Ionicons";
+// import axios from "axios";
+
+// const LoginScreen = ({ navigation }) => {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   const handleLogin = async () => {
+//     if (!email || !password) {
+//       Alert.alert("Error", "Please enter both email and password.");
+//       return;
+//     }
+
+//     const data = {
+//       username: email,
+//       password: password,
+//     };
+
+//     // console.log(JSON.stringify(data));
+
+//     setLoading(true);
+
+//     try {
+//       const response = await axios.post(
+//         "http://192.168.1.101:5000/login",
+//         data
+//       );
+
+//       // console.log(response);
+
+//       if (response.data) {
+//         Alert.alert("Welcome", "Login successful!");
+//         navigation.navigate("Home");
+//       } else {
+//         Alert.alert(
+//           "Login Failed",
+//           response.data.message || "Invalid credentials."
+//         );
+//       }
+//     } catch (error) {
+//       console.error("Login error:", error);
+//       Alert.alert("Error", "Something went wrong. Try again later.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <StatusBar barStyle="light-content" />
+//       <View style={styles.header}>
+//         <Text style={styles.title}>Hiresy</Text>
+//         <Text style={styles.subtitle}>
+//           Make your dream job come to reality!
+//         </Text>
+//       </View>
+
+//       <View style={styles.formContainer}>
+//         {/* Toggle between Login and Sign Up */}
+//         <View style={styles.toggleContainer}>
+//           <TouchableOpacity style={[styles.toggleButton, styles.activeToggle]}>
+//             <Text style={styles.activeToggleText}>Login</Text>
+//           </TouchableOpacity>
+//           <TouchableOpacity
+//             style={styles.toggleButton}
+//             onPress={() => navigation.navigate("Signup")}
+//           >
+//             <Text style={styles.toggleText}>Sign Up</Text>
+//           </TouchableOpacity>
+//         </View>
+
+//         {/* Email */}
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.inputLabel}>Email</Text>
+//           <TextInput
+//             style={styles.input}
+//             placeholder="you@example.com"
+//             value={email}
+//             onChangeText={setEmail}
+//             keyboardType="email-address"
+//             autoCapitalize="none"
+//           />
+//         </View>
+
+//         {/* Password */}
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.inputLabel}>Password</Text>
+//           <View style={styles.passwordContainer}>
+//             <TextInput
+//               style={styles.passwordInput}
+//               placeholder="••••••••"
+//               value={password}
+//               onChangeText={setPassword}
+//               secureTextEntry={!showPassword}
+//             />
+//             <TouchableOpacity
+//               onPress={() => setShowPassword(!showPassword)}
+//               style={styles.eyeIcon}
+//             >
+//               <Ionicons
+//                 name={showPassword ? "eye-outline" : "eye-off-outline"}
+//                 size={20}
+//                 color="#888"
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+
+//         {/* Login Button */}
+//         <TouchableOpacity
+//           style={styles.loginButton}
+//           onPress={handleLogin}
+//           disabled={loading}
+//         >
+//           {loading ? (
+//             <ActivityIndicator size="small" color="#fff" />
+//           ) : (
+//             <Text style={styles.loginButtonText}>Login</Text>
+//           )}
+//         </TouchableOpacity>
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, backgroundColor: "#0066FF" },
+//   header: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 30 },
+//   title: { fontSize: 24, fontWeight: "bold", color: "white", marginBottom: 5 },
+//   subtitle: { fontSize: 14, color: "white", opacity: 0.9 },
+//   formContainer: {
+//     flex: 1,
+//     backgroundColor: "white",
+//     borderTopLeftRadius: 20,
+//     borderTopRightRadius: 20,
+//     padding: 20,
+//   },
+//   toggleContainer: {
+//     flexDirection: "row",
+//     backgroundColor: "#F0F0F0",
+//     borderRadius: 25,
+//     height: 50,
+//     marginBottom: 20,
+//   },
+//   toggleButton: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     borderRadius: 25,
+//   },
+//   activeToggle: { backgroundColor: "#0066FF" },
+//   toggleText: { fontSize: 16, color: "#666" },
+//   activeToggleText: { fontSize: 16, color: "white", fontWeight: "600" },
+//   inputContainer: { marginBottom: 15 },
+//   inputLabel: { fontSize: 14, color: "#333", marginBottom: 5 },
+//   input: {
+//     height: 50,
+//     backgroundColor: "#F8F8F8",
+//     borderRadius: 10,
+//     paddingHorizontal: 15,
+//     fontSize: 16,
+//   },
+//   passwordContainer: {
+//     flexDirection: "row",
+//     backgroundColor: "#F8F8F8",
+//     borderRadius: 10,
+//     height: 50,
+//     alignItems: "center",
+//   },
+//   passwordInput: { flex: 1, height: 50, paddingHorizontal: 15, fontSize: 16 },
+//   eyeIcon: { paddingHorizontal: 15 },
+//   loginButton: {
+//     backgroundColor: "#0066FF",
+//     height: 50,
+//     borderRadius: 10,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     marginTop: 20,
+//   },
+//   loginButtonText: { color: "white", fontSize: 16, fontWeight: "600" },
+// });
+
+// export default LoginScreen;
+
 // LoginScreen.js
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  StatusBar 
-} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+  StatusBar,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import axios from "axios";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // const loginhandler = () => {
+  //   navigation.navigate("Home");
+  // };
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please enter both email and password.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post("http://192.168.1.101:5000/login", {
+        username: email,
+        pasword: password,
+      });
+
+      if (response.data.success) {
+        Alert.alert("Welcome", "Login successful!");
+        // Navigate or homepage here
+        navigation.navigate("Home");
+      } else {
+        Alert.alert(
+          "Login Failed",
+          response.data.message || "Invalid credentials."
+        );
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert("Error", "Something went wrong. Try again later.");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.title}>Hiresy</Text>
-        <Text style={styles.subtitle}>Make your dream job come to reality !</Text>
+        <Text style={styles.subtitle}>
+          Make your dream job come to reality !
+        </Text>
       </View>
 
       <View style={styles.formContainer}>
         {/* Toggle between Login and Sign Up */}
         <View style={styles.toggleContainer}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.toggleButton, styles.activeToggle]}
             onPress={() => {}}
           >
             <Text style={styles.activeToggleText}>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => navigation.navigate('Signup')}
+            onPress={() => navigation.navigate("Signup")}
           >
             <Text style={styles.toggleText}>Sign Up</Text>
           </TouchableOpacity>
@@ -62,7 +302,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.inputLabel}>Email</Text>
           <TextInput
             style={styles.input}
-            placeholder="tsotsa.test@email.com"
+            placeholder="example@email.com"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -81,21 +321,32 @@ const LoginScreen = ({ navigation }) => {
               onChangeText={setPassword}
               secureTextEntry={!showPassword}
             />
-            <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
-              <Ionicons 
-                name={showPassword ? 'eye-outline' : 'eye-off-outline'} 
-                size={20} 
-                color="#888" 
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={styles.eyeIcon}
+            >
+              <Ionicons
+                name={showPassword ? "eye-outline" : "eye-off-outline"}
+                size={20}
+                color="#888"
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={styles.forgotPasswordButton}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ForgotPassword")}
+            style={styles.forgotPasswordButton}
+          >
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
 
         {/* Login Button */}
-        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity
+          style={styles.loginButton}
+          // onPress={handleLogin}
+          // onPress={loginhandler} Or use this for direct login
+          onPress={() => navigation.navigate("Home")}
+        >
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -106,7 +357,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0066FF',
+    backgroundColor: "#0066FF",
   },
   header: {
     paddingHorizontal: 20,
@@ -115,64 +366,64 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
     marginBottom: 5,
   },
   subtitle: {
     fontSize: 14,
-    color: 'white',
+    color: "white",
     opacity: 0.9,
   },
   formContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
   },
   toggleContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#F0F0F0',
+    flexDirection: "row",
+    backgroundColor: "#F0F0F0",
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
   },
   toggleButton: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 25,
   },
   activeToggle: {
-    backgroundColor: '#0066FF',
+    backgroundColor: "#0066FF",
   },
   toggleText: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
   activeToggleText: {
     fontSize: 16,
-    color: 'white',
-    fontWeight: '600',
+    color: "white",
+    fontWeight: "600",
   },
   socialContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 15,
   },
   socialButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#F0F0F0',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#F0F0F0",
+    justifyContent: "center",
+    alignItems: "center",
     marginHorizontal: 10,
   },
   orText: {
-    textAlign: 'center',
-    color: '#888',
+    textAlign: "center",
+    color: "#888",
     marginBottom: 15,
   },
   inputContainer: {
@@ -180,22 +431,22 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 14,
-    color: '#333',
+    color: "#333",
     marginBottom: 5,
   },
   input: {
     height: 50,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: "#F8F8F8",
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 16,
   },
   passwordContainer: {
-    flexDirection: 'row',
-    backgroundColor: '#F8F8F8',
+    flexDirection: "row",
+    backgroundColor: "#F8F8F8",
     borderRadius: 10,
     height: 50,
-    alignItems: 'center',
+    alignItems: "center",
   },
   passwordInput: {
     flex: 1,
@@ -207,25 +458,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   forgotPasswordButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     marginTop: 5,
   },
   forgotPasswordText: {
-    color: '#0066FF',
+    color: "#0066FF",
     fontSize: 14,
   },
   loginButton: {
-    backgroundColor: '#0066FF',
+    backgroundColor: "#0066FF",
     height: 50,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
   },
   loginButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });
 

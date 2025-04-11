@@ -8,7 +8,7 @@ import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import ForgotPasswordScreen from "../screens/auth/ForgotPasswordScreen";
 import ResetPasswordScreen from "../screens/auth/ResetPasswordScreen";
-import HomeScreen from "../screens/HomeScreen"
+import HomeScreen from "../screens/HomeScreen";
 import MapScreen from "../screens/MapScreen";
 import JobOpportunityScreen from "../screens/JobOpportunityScreen";
 import AccountScreen from "../screens/AccountScreen";
@@ -26,6 +26,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import JobApplicationScreen from "../screens/JobApplicationScreen";
 import VerifyOTP from "../screens/auth/VerifyOTP";
 import VerifyEmail from "../screens/auth/VerifyEmail";
+import JobDescriptionScreen from "../screens/JobDescriptionScreen";
 
 const Stack = createStackNavigator();
 
@@ -47,7 +48,10 @@ const AppNavigator = () => {
         <Stack.Screen name="Account" component={AccountScreen} />
         <Stack.Screen name="EditAccount" component={EditAccountScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-        <Stack.Screen name="AccountSettings" component={AccountSettingsScreen} />
+        <Stack.Screen
+          name="AccountSettings"
+          component={AccountSettingsScreen}
+        />
         <Stack.Screen name="MyWallet" component={MyWalletScreen} />
         <Stack.Screen name="JobApplied" component={JobAppliedScreen} />
         <Stack.Screen name="FavoriteJob" component={FavoriteJobScreen} />
@@ -57,6 +61,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Notifications" component={NotificationScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="apply" component={JobApplicationScreen} />
+        <Stack.Screen name="JobDescription" component={JobDescriptionScreen} />
         <Stack.Screen name="verify-otp" component={VerifyOTP} />
         <Stack.Screen name="verify-email" component={VerifyEmail} />
       </Stack.Navigator>
