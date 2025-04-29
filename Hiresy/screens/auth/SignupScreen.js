@@ -12,7 +12,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-// import { Picker } from "@react-native-picker/picker"; // Commented out since we're not using it
 import axios from "axios";
 
 const SignUpScreen = ({ navigation }) => {
@@ -20,7 +19,6 @@ const SignUpScreen = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  // const [role, setRole] = useState("jobseeker"); // Commented out role
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,23 +47,48 @@ const SignUpScreen = ({ navigation }) => {
 
     setLoading(true);
 
+    // Debug data being sent
+    const userData = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      username,
+      password,
+    };
+    
+    console.log("Sending registration data:", userData);
+
     try {
+      console.log("Attempting to connect to:", "http://192.168.1.101:5000/register/job_seeker");
+      
       const response = await axios.post(
         "http://192.168.1.101:5000/register/job_seeker",
-        // "https://3a26-129-0-189-42.ngrok-free.app/register",
+        userData,
         {
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          username,
-          // role,
-          password,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
         }
       );
 
-      if (response.data.success) {
-        Alert.alert("Success", "Account created! Please login.");
-        navigation.navigate("Login");
+      console.log("Server response:", response.data);
+
+      if (response.data) {
+        // Show success alert
+        Alert.alert(
+          "Success", 
+          "Account created! Please login with your new credentials.",
+          [
+            { 
+              text: "OK", 
+              onPress: () => {
+                // Navigate to Login after successful registration
+                navigation.navigate("Login");
+              }
+            }
+          ]
+        );
       } else {
         Alert.alert(
           "Registration Failed",
@@ -74,10 +97,28 @@ const SignUpScreen = ({ navigation }) => {
       }
     } catch (error) {
       console.error("Registration error:", error);
-      Alert.alert(
-        "Error",
-        "Unable to register. Please check your connection or try again."
-      );
+      
+      // More detailed error logging
+      if (error.response) {
+        // The server responded with a status code outside of 2xx range
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+        
+        Alert.alert(
+          "Server Error",
+          `Server responded with error: ${error.response.status}\n${JSON.stringify(error.response.data || "Unknown error")}`
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error request:", error.request);
+        Alert.alert(
+          "No Response",
+          "Request was sent but no response received. Check server status."
+        );
+      } else {
+        // Something happened in setting up the request
+        Alert.alert("Error", "Unable to make request: " + error.message);
+      }
     } finally {
       setLoading(false); // Hide spinner
     }
@@ -134,7 +175,7 @@ const SignUpScreen = ({ navigation }) => {
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
               style={styles.input}
-              placeholder="tsotsa.test@example.com"
+              placeholder="email@example.com"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
@@ -275,6 +316,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   loginButtonText: { color: "white", fontSize: 16, fontWeight: "600" },
+  scrollView: { flex: 1 },
 });
 
 export default SignUpScreen;
